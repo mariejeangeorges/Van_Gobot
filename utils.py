@@ -18,6 +18,21 @@ import tomllib
 def find_surface(
     arm, x, y, z, Rx=180, Ry=0, Rz=0, absolute_epsilon=1, relative_epsilon=0, verbose=True
 ):
+    """
+    Find the surface and detect collision.
+
+    Parameters:
+    - arm: Robot arm object.
+    - x, y, z: Coordinates of the initial position.
+    - Rx, Ry, Rz: Roll, pitch, and yaw angles in degrees.
+    - absolute_epsilon: Absolute threshold for collision detection.
+    - relative_epsilon: Relative threshold for collision detection.
+    - verbose: If True, print messages during execution.
+
+    Returns:
+    - pos: Final position after collision.
+    - torques: List of torques during the collision detection process.
+    """
     torques = []
     arm.set_position(
         x=x,
