@@ -1,0 +1,7 @@
+xarm-python-sdk@ git+https://github.com/xArm-Developer/xArm-Python-SDK
+numpy
+matplotlib
+opencv-python
+scikit-image
+Pebble
+tomllib
