@@ -3,9 +3,9 @@ image_path = "data/monalisa.jpg" # Only has an effect if enable_photomaton is se
 robot_ip = "192.168.1.235"
 
 [calibration]
-above_origin = [324, -6, -71]
-above_p1 = [454, -6, -71]
-above_p2 = [324, 114, -71]
+above_origin = []
+above_p1 = []
+above_p2 = []
 epsilon = 0.1
 relative_epsilon = 0.2
 

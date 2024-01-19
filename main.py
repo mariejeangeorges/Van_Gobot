@@ -8,6 +8,9 @@ from utils import sort_edges
 import signal
 import cv2
 
+import tkinter as tk
+from tkinter import simpledialog
+
 
 def load_config():
     with open("config.toml", "rb") as f:
@@ -75,6 +78,19 @@ def photomaton_meta_loop(arm, config):
         draw_image(arm, image, config, converter)
 
 
+def get_coordinates_from_user():
+    root = tk.Tk()
+    root.withdraw()
+
+    above_origin = simpledialog.askstring("Input", "Enter coordinates for above_origin (comma-separated):")
+    above_p1 = simpledialog.askstring("Input", "Enter coordinates for above_p1 (comma-separated):")
+    above_p2 = simpledialog.askstring("Input", "Enter coordinates for above_p2 (comma-separated):")
+
+    root.destroy()
+
+    return list(map(int, above_origin.split(','))), list(map(int, above_p1.split(','))), list(map(int, above_p2.split(',')))
+
+
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
 
@@ -82,6 +98,14 @@ if __name__ == "__main__":
 
     # Connect to robot
     arm = get_arm(config["robot_ip"])
+
+    if not config["calibration"].get("above_origin") or not config["calibration"].get("above_p1") or not config[
+        "calibration"].get("above_p2"):
+        # If any of the coordinates is not present in the config, get them from the user
+        above_origin, above_p1, above_p2 = get_coordinates_from_user()
+        config["calibration"]["above_origin"] = above_origin
+        config["calibration"]["above_p1"] = above_p1
+        config["calibration"]["above_p2"] = above_p2
 
     if config["enable_photomaton"]:
         photomaton_meta_loop(arm, config)
