@@ -28,9 +28,11 @@ import skimage as ski
 
 
 def process_frame(frame):
-    res = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    res = cv2.flip(res, 1)
-    res = res[int(res.shape[0] // 2) - 130 :, :]
+    #res = cv2.rotate(frame, cv2.ROTATE_180)
+    #res = cv2.flip(res, 1)
+    #res = res[int(res.shape[0] // 2) - 130 :, :]
+    res = frame[:, int(frame.shape[1] // 2) - 130: int(frame.shape[1] // 2) + 200]
+
     return res
 
 
@@ -39,7 +41,7 @@ def get_frame(cap):
     return process_frame(frame)
 
 
-img = cv2.imread("Data/cadre.png")
+img = cv2.imread("data/cadre1.png")
 
 
 def show(image):
