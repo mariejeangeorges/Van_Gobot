@@ -245,3 +245,14 @@ def image_thresholding(image):
 
 def get_config():
     return tomllib.load("config.toml")
+
+
+
+from robot_control_app import RobotControlApp
+def calibrate_from_user_input(arm):
+    app = RobotControlApp(arm)
+    app.run()
+    # La calibration est maintenant basée sur les points où l'utilisateur a positionné le robot
+    origin = arm.position
+    app.root.destroy()  # Ferme la fenêtre Tkinter après la calibration
+    return origin
