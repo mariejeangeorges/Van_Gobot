@@ -12,6 +12,8 @@ import tkinter as tk
 from tkinter import simpledialog
 from utils import calibrate_from_user_input
 
+import numpy as np
+import os
 
 def load_config():
     with open("config.toml", "rb") as f:
@@ -48,7 +50,7 @@ def get_coordinates_converter(arm, config, image_shape):
     origin, p1, p2 = calibrate_from_config(arm, config)
 
     # Create converter
-    converter = CoordinatesConverter(list(reversed(image.shape[:2])), origin, p1, p2)
+    converter = CoordinatesConverter(list(reversed(image_shape[:2])), origin, p1, p2)
 
     return converter
 
@@ -73,7 +75,28 @@ def draw_image(arm, image, config, converter=None):
         converter = get_coordinates_converter(arm, config, image.shape)
     edges = edges_from_config(image, config)
     converted_edges = converter.convert_list_of_points(edges)
+
+    save_contours_image(image, edges)    # Save the image with contours
+
     draw_edges(arm, converted_edges)
+
+
+
+def save_contours_image(image, edges):
+    # Create a binary image with white background
+    contours_image = np.ones_like(image, dtype=np.uint8) * 255
+    # Draw contours in black
+    cv2.drawContours(contours_image, [np.array(edge, dtype=np.int32) for edge in edges], -1, (0, 0, 0), 1)
+    # Get the path to the "data" folder
+    data_folder = os.path.join(os.getcwd(), "data")
+    # Ensure the "data" folder exists
+    os.makedirs(data_folder, exist_ok=True)
+    # Save the image in the "data" folder
+    contours_image_path = os.path.join(data_folder, "contours_image.png")
+    cv2.imwrite(contours_image_path, contours_image)
+    print(f"Contours image saved at: {contours_image_path}")
+
+
 
 
 def photomaton_meta_loop(arm, config):
