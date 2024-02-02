@@ -256,3 +256,4 @@ def calibrate_from_user_input(arm):
     origin = arm.position
     app.root.destroy()  # Ferme la fenêtre Tkinter après la calibration
     return origin
+
