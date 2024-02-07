@@ -34,6 +34,7 @@ def find_surface(
     - torques: List of torques during the collision detection process.
     """
     torques = []
+    # Déplace le bras à la position initiale
     arm.set_position(
         x=x,
         y=y,
@@ -48,58 +49,37 @@ def find_surface(
         relative=False,
     )
     initial_torques = np.array(arm.joints_torque[0:6])
-    arm.set_position(
-        x=x,
-        y=y,
-        z=z - 1,
-        roll=Rx,
-        pitch=Ry,
-        yaw=Rz,
-        speed=50,
-        is_radian=0,
-        wait=True,
-        radius=None,
-        relative=False,
-    )
-    test1_torques = np.array(arm.joints_torque[0:6])
-    arm.set_position(
-        x=x,
-        y=y,
-        z=z - 2,
-        roll=Rx,
-        pitch=Ry,
-        yaw=Rz,
-        speed=50,
-        is_radian=0,
-        wait=True,
-        radius=None,
-        relative=False,
-    )
-    test2_torques = np.array(arm.joints_torque[0:6])
-    arm.set_position(
-        x=x,
-        y=y,
-        z=z - 3,
-        roll=Rx,
-        pitch=Ry,
-        yaw=Rz,
-        speed=50,
-        is_radian=0,
-        wait=True,
-        radius=None,
-        relative=False,
-    )
-    test3_torques = np.array(arm.joints_torque[0:6])
-    mins = np.min([test1_torques, test2_torques, test3_torques, initial_torques], axis=0)
-    maxs = np.max([test1_torques, test2_torques, test3_torques, initial_torques], axis=0)
+
+    # Effectue des mouvements pour mesurer les torques à différentes hauteurs
+    for i in range(1, 4):
+        arm.set_position(
+            x=x,
+            y=y,
+            z=z - i,
+            roll=Rx,
+            pitch=Ry,
+            yaw=Rz,
+            speed=50,
+            is_radian=0,
+            wait=True,
+            radius=None,
+            relative=False,
+        )
+        test_torques = np.array(arm.joints_torque[0:6])
+        torques.append(test_torques)
+
+    # Calcul des limites de tolérance basées sur les mesures de torques
+    mins = np.min(torques, axis=0)
+    maxs = np.max(torques, axis=0)
     d = np.abs(maxs - mins)
-    print(d)
     boundaries = [
         mins - relative_epsilon * d - absolute_epsilon,
         maxs + relative_epsilon * d + absolute_epsilon,
     ]
-    print(boundaries)
+
     actual_torques = np.array(arm.joints_torque[0:6])
+
+    # Mouvement du bras vers une position où une collision est attendue
     arm.set_position(
         x=x,
         y=y,
@@ -113,14 +93,19 @@ def find_surface(
         radius=None,
         relative=False,
     )
+
+    # Attend la collision en vérifiant les torques mesurés
     while (boundaries[0] < actual_torques).all() and (actual_torques < boundaries[1]).all():
         actual_torques = np.array(arm.joints_torque[0:6])
         pos = arm.position_aa
         torques.append(actual_torques)
         if verbose:
-            print("i'm waiting for collision")
+            print("Waiting for collision...")
+
     if verbose:
-        print("I collided")
+        print("Collision detected")
+
+    # Ajuste l'état du bras après la collision
     arm.set_state(4)
     time.sleep(1)
     arm.set_state(0)
@@ -137,6 +122,8 @@ def find_surface(
         radius=None,
         relative=False,
     )
+
+    # Renvoie la position finale après la collision et la liste des torques mesurés
     return pos, torques
 
 

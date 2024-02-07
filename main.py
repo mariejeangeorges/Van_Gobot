@@ -38,7 +38,7 @@ def calibrate_from_config(arm, config):
     return origin, p1, p2
 
 """
-
+# Ouvre une fenêtre qui permet de déplacer le robot aux points origin, p1 et p2
 def calibrate_from_config(arm, config):
     origin = calibrate_from_user_input(arm)
     p1 = calibrate_from_user_input(arm)
@@ -130,9 +130,10 @@ if __name__ == "__main__":
     # Connect to robot
     arm = get_arm(config["robot_ip"])
 
-    """if not config["calibration"].get("above_origin") or not config["calibration"].get("above_p1") or not config[
+    """# Permet de rentrer soi-même les valeurs pour les points origin, p1, p2
+    if not config["calibration"].get("above_origin") or not config["calibration"].get("above_p1") or not config[
         "calibration"].get("above_p2"):
-        # If any of the coordinates is not present in the config, get them from the user
+        
         above_origin, above_p1, above_p2 = get_coordinates_from_user()
         config["calibration"]["above_origin"] = above_origin
         config["calibration"]["above_p1"] = above_p1
