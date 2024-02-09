@@ -51,26 +51,50 @@ def find_surface(
     initial_torques = np.array(arm.joints_torque[0:6])
 
     # Effectue des mouvements pour mesurer les torques à différentes hauteurs
-    for i in range(1, 4):
-        arm.set_position(
-            x=x,
-            y=y,
-            z=z - i,
-            roll=Rx,
-            pitch=Ry,
-            yaw=Rz,
-            speed=50,
-            is_radian=0,
-            wait=True,
-            radius=None,
-            relative=False,
-        )
-        test_torques = np.array(arm.joints_torque[0:6])
-        torques.append(test_torques)
-
-    # Calcul des limites de tolérance basées sur les mesures de torques
-    mins = np.min(torques, axis=0)
-    maxs = np.max(torques, axis=0)
+    arm.set_position(
+        x=x,
+        y=y,
+        z=z - 1,
+        roll=Rx,
+        pitch=Ry,
+        yaw=Rz,
+        speed=50,
+        is_radian=0,
+        wait=True,
+        radius=None,
+        relative=False,
+    )
+    test1_torques = np.array(arm.joints_torque[0:6])
+    arm.set_position(
+        x=x,
+        y=y,
+        z=z - 2,
+        roll=Rx,
+        pitch=Ry,
+        yaw=Rz,
+        speed=50,
+        is_radian=0,
+        wait=True,
+        radius=None,
+        relative=False,
+    )
+    test2_torques = np.array(arm.joints_torque[0:6])
+    arm.set_position(
+        x=x,
+        y=y,
+        z=z - 3,
+        roll=Rx,
+        pitch=Ry,
+        yaw=Rz,
+        speed=50,
+        is_radian=0,
+        wait=True,
+        radius=None,
+        relative=False,
+    )
+    test3_torques = np.array(arm.joints_torque[0:6])
+    mins = np.min([test1_torques, test2_torques, test3_torques, initial_torques], axis=0)
+    maxs = np.max([test1_torques, test2_torques, test3_torques, initial_torques], axis=0)
     d = np.abs(maxs - mins)
     boundaries = [
         mins - relative_epsilon * d - absolute_epsilon,
@@ -103,7 +127,7 @@ def find_surface(
             print("Waiting for collision...")
 
     if verbose:
-        print("Collision detected")
+        print("I collided")
 
     # Ajuste l'état du bras après la collision
     arm.set_state(4)
