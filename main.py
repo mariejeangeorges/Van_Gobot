@@ -33,6 +33,7 @@ def calibrate_from_config(arm, config):
             config["calibration"]["above_p2"],
         ],
         absolute_epsilon=config["calibration"]["epsilon"],
+        relative_epsilon=config["calibration"]["relative_epsilon"],
     )
 
     return origin, p1, p2
