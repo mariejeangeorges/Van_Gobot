@@ -66,7 +66,7 @@ class App(customtkinter.CTk):
                                                                command=self.change_scaling_event)
         self.scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20))
 
-        # create main entry and button
+        """# create main entry and button
         self.entry = customtkinter.CTkEntry(self, placeholder_text="CTkEntry")
         self.entry.grid(row=3, column=1, columnspan=2, padx=(20, 0), pady=(20, 20), sticky="nsew")
 
@@ -75,9 +75,9 @@ class App(customtkinter.CTk):
 
         # create textbox
         self.textbox = customtkinter.CTkTextbox(self, width=250)
-        self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")
+        self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")"""
 
-        # create tabview
+        """"# create tabview
         self.tabview = customtkinter.CTkTabview(self, width=250)
         self.tabview.grid(row=0, column=2, padx=(20, 0), pady=(20, 0), sticky="nsew")
         self.tabview.add("CTkTabview")
@@ -96,9 +96,9 @@ class App(customtkinter.CTk):
                                                            command=self.open_input_dialog_event)
         self.string_input_button.grid(row=2, column=0, padx=20, pady=(10, 10))
         self.label_tab_2 = customtkinter.CTkLabel(self.tabview.tab("Tab 2"), text="CTkLabel on Tab 2")
-        self.label_tab_2.grid(row=0, column=0, padx=20, pady=20)
+        self.label_tab_2.grid(row=0, column=0, padx=20, pady=20)"""
 
-        # create radiobutton frame
+        """# create radiobutton frame
         self.radiobutton_frame = customtkinter.CTkFrame(self)
         self.radiobutton_frame.grid(row=0, column=3, padx=(20, 20), pady=(20, 0), sticky="nsew")
         self.radio_var = tkinter.IntVar(value=0)
@@ -109,7 +109,7 @@ class App(customtkinter.CTk):
         self.radio_button_2 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var, value=1)
         self.radio_button_2.grid(row=2, column=2, pady=10, padx=20, sticky="n")
         self.radio_button_3 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var, value=2)
-        self.radio_button_3.grid(row=3, column=2, pady=10, padx=20, sticky="n")
+        self.radio_button_3.grid(row=3, column=2, pady=10, padx=20, sticky="n")"""
 
         # create slider and progressbar frame
         self.slider_progressbar_frame = customtkinter.CTkFrame(self, fg_color="transparent")
@@ -122,16 +122,31 @@ class App(customtkinter.CTk):
         #self.progressbar_2.grid(row=2, column=0, padx=(20, 10), pady=(10, 10), sticky="ew")
         #self.slider_1 = customtkinter.CTkSlider(self.slider_progressbar_frame, from_=0, to=1, number_of_steps=4)
         #self.slider_1.grid(row=3, column=0, padx=(20, 10), pady=(10, 10), sticky="ew")
+
+        self.slider_button_minus = customtkinter.CTkButton(self.slider_progressbar_frame, text="-",command=self.decrement_slider)
+        self.slider_button_minus.grid(row=1, column=0, padx=(0, 10), pady=(10, 10), ipadx=(0,10), sticky="nsew")
+
         self.slider_2 = customtkinter.CTkSlider(self.slider_progressbar_frame, from_=0, to=700,
-                                                orientation="horizontal", command=self.sliding)
-        self.slider_2.grid(row=1, column=0, padx=(0, 10), pady=(10, 10), sticky="ns")
+                                                orientation="horizontal", command=self.sliding, height=10, width=500)
+        self.slider_2.grid(row=1, column=1, padx=(0, 10), pady=(10, 10), sticky="ns")
         self.slider_2.set(300)
+
         self.slider_entry = customtkinter.CTkEntry(self.slider_progressbar_frame, width=50, justify="center")
-        self.slider_entry.grid(row=1, column=1, padx=(10, 0), pady=(10, 10), sticky="nsew")
+        self.slider_entry.grid(row=1, column=2, padx=(10, 0), pady=(10, 10), sticky="nsew")
         self.slider_entry.insert(0, "300")
         self.slider_entry.bind("<Return>", self.set_slider_value)
 
-        # create scrollable frame
+
+        self.initial_position_button = customtkinter.CTkButton(self.slider_progressbar_frame, command=self.initial_position())
+        self.initial_position_button.grid(row=2, column=0, padx=20, pady=10)
+
+
+        self.slider_button_plus = customtkinter.CTkButton(self.slider_progressbar_frame, text="+", command=self.increment_slider)
+        self.slider_button_plus.grid(row=1, column=3, padx=(0, 10), pady=(10, 10), sticky="nsew")
+
+
+
+        """# create scrollable frame
         self.scrollable_frame = customtkinter.CTkScrollableFrame(self, label_text="CTkScrollableFrame")
         self.scrollable_frame.grid(row=1, column=2, padx=(20, 0), pady=(20, 0), sticky="nsew")
         self.scrollable_frame.grid_columnconfigure(0, weight=1)
@@ -139,7 +154,7 @@ class App(customtkinter.CTk):
         for i in range(100):
             switch = customtkinter.CTkSwitch(master=self.scrollable_frame, text=f"CTkSwitch {i}")
             switch.grid(row=i, column=0, padx=10, pady=(0, 20))
-            self.scrollable_frame_switches.append(switch)
+            self.scrollable_frame_switches.append(switch)"""
 
         # create checkbox and switch frame
         #self.checkbox_slider_frame = customtkinter.CTkFrame(self)
@@ -155,13 +170,13 @@ class App(customtkinter.CTk):
         self.sidebar_button_3.configure(state="disabled", text="Disabled CTkButton")
         #self.checkbox_3.configure(state="disabled")
         #self.checkbox_1.select()
-        self.scrollable_frame_switches[0].select()
-        self.scrollable_frame_switches[4].select()
-        self.radio_button_3.configure(state="disabled")
+        #self.scrollable_frame_switches[0].select()
+        #self.scrollable_frame_switches[4].select()
+        #self.radio_button_3.configure(state="disabled")
         self.appearance_mode_optionemenu.set("Dark")
         self.scaling_optionemenu.set("100%")
-        self.optionmenu_1.set("CTkOptionmenu")
-        self.combobox_1.set("CTkComboBox")
+        #self.optionmenu_1.set("CTkOptionmenu")
+        #self.combobox_1.set("CTkComboBox")
         #self.slider_1.configure(command=self.progressbar_2.set)
         self.slider_2.configure()
         #self.textbox.insert("0.0", "CTkTextbox\n\n" + "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\n\n" * 20)
@@ -182,6 +197,9 @@ class App(customtkinter.CTk):
     def sidebar_button_event(self):
         print("sidebar_button click")
 
+    def initial_position(self):
+        pass
+
     def sliding(self, value):
         # update entry text
         value_int = int(value)
@@ -193,6 +211,16 @@ class App(customtkinter.CTk):
         entry_value = self.slider_entry.get()
         if entry_value:
             self.slider_2.set(int(entry_value))
+
+    def increment_slider(self):
+        # increment slider value by 1
+        current_value = self.slider_2.get()
+        self.slider_2.set(current_value + 1)
+
+    def decrement_slider(self):
+        # decrement slider value by 1
+        current_value = self.slider_2.get()
+        self.slider_2.set(current_value - 1)
 
 
 
