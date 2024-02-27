@@ -15,6 +15,9 @@ from utils import calibrate_from_user_input
 import numpy as np
 import os
 
+from CustomTkinter import App
+from robot_control_app import RobotControlApp
+
 def load_config():
     with open("config.toml", "rb") as f:
         return tomllib.load(f)

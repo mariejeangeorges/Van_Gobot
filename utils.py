@@ -260,8 +260,11 @@ def get_config():
 
 
 from robot_control_app import RobotControlApp
+from CustomTkinter import App
+
 def calibrate_from_user_input(arm):
     app = RobotControlApp(arm)
+    #app = App(arm)
     app.run()
     # La calibration est maintenant basée sur les points où l'utilisateur a positionné le robot
     origin = arm.position

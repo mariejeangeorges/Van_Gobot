@@ -225,3 +225,5 @@ def draw_edges(
             elif pause_at_edge_nb is not None and i > pause_at_edge_nb:
                 already_paused = True
                 wait_for_input("continue")
+
+
