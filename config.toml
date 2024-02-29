@@ -1,11 +1,11 @@
-enable_photomaton = true
+enable_photomaton = false
 image_path = "data/monalisa.jpg" # Only has an effect if enable_photomaton is set to false
 robot_ip = "192.168.1.235"
 
 [calibration]
-above_origin = [275, -43, -52]
-above_p1 = [405, -43, -52]
-above_p2 = [275, 73, -52]
+above_origin = [275, -43, -78]
+above_p1 = [405, -43, -78]
+above_p2 = [275, 73, -78]
 epsilon = 0.1
 relative_epsilon = 0.2
 
@@ -34,6 +34,3 @@ sort_edges = true
 min_edge_length = 10
 edge_step = 5
 
-#Hotspot
-#id: f08pb4n
-#mdp: 0vpl69AA

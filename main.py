@@ -84,6 +84,9 @@ def draw_image(arm, image, config, converter=None):
 
     draw_edges(arm, converted_edges)
 
+    """final=config["calibration"]["above_origin"]
+    return final"""
+
 
 
 def save_contours_image(image, edges):
